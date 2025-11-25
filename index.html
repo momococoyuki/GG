@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Vanille premium de Madagascar - Qualité exceptionnelle directement du producteur. Gousses, extraits et poudre de vanille artisanale.">
+    <meta name="keywords" content="vanille, vanille madagascar, gousse vanille, extrait vanille, vanille premium">
+    <title>MADA-VANILLE | Vanille Premium Madagascar</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Three.js pour animations 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body>
+    <!-- Canvas 3D pour animations de particules -->
+    <canvas id="canvas3d"></canvas>
+
+    <!-- Curseur personnalisé luxueux -->
+    <div class="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+    </div>
+    <!-- Bouton WhatsApp Flottant -->
+    <a href="https://wa.me/33619138632" class="whatsapp-float" target="_blank" aria-label="Contactez-nous sur WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path
+                d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z"
+                fill="currentColor" />
+        </svg>
+    </a>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="#accueil" class="logo">
+                    <img src="logo.png" alt="MADA-VANILLE Logo" class="logo-image">
+                    <span class="logo-text">MADA-VANILLE</span>
+                </a>
+
+                <button class="nav-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#produits">Nos Produits</a></li>
+                    <li><a href="#histoire">Notre Histoire</a></li>
+                    <li><a href="#avantages">Pourquoi Nous</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="https://www.instagram.com/mada.vanille/" target="_blank" class="nav-social"
+                            aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a></li>
+                    <li><a href="https://wa.me/33619138632" class="nav-cta">Commander</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-background">
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">
+                    <span class="badge-icon">🇲🇬</span>
+                    Madagascar Premium • Direct Producteur
+                </span>
+                <h1 class="hero-title">
+                    <span class="title-line">Découvrez la</span>
+                    <span class="title-main">Vanille Authentique</span>
+                    <span class="title-sub">de Madagascar</span>
+                </h1>
+                <p class="hero-subtitle">
+                    <span class="highlight-text">✨ 100% Naturelle</span> •
+                    <span class="highlight-text">🌿 Grade A Premium</span> •
+                    <span class="highlight-text">⚡ Livraison Rapide</span>
+                </p>
+                <p class="hero-description">De nos plantations à votre cuisine. Savourez l'excellence de la vraie
+                    vanille Bourbon, cultivée avec passion et expertise depuis des générations.</p>
+
+                <div class="hero-cta">
+                    <a href="https://wa.me/33619138632" class="btn btn-primary btn-pulse">
+                        <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+                            <path
+                                d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z" />
+                        </svg>
+                        Commander Maintenant
+                        <span class="btn-shine"></span>
+                    </a>
+                    <a href="#produits" class="btn btn-secondary btn-glass">
+                        Voir nos produits
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="hero-trust">
+
+                    <div class="trust-item">
+                        <span class="trust-icon">📦</span>
+                        <div>
+                            <strong>48h</strong>
+                            <span>Livraison</span>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">🔒</span>
+                        <div>
+                            <strong>100%</strong>
+                            <span>Paiement sécurisé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat" data-stat="1">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Naturelle</span>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat" data-stat="2">
+                    <span class="stat-number">Grade A</span>
+                    <span class="stat-label">Qualité Premium</span>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat" data-stat="3">
+                    <span class="stat-number">Direct</span>
+                    <span class="stat-label">Producteur</span>
+                    <div class="stat-glow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Découvrir</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Produits Section -->
+    <section id="produits" class="products">
+        <div class="container">
+            <!-- Petite Quantité -->
+            <div class="product-category">
+                <div class="section-header">
+                    <span class="section-badge">Nos Produits</span>
+                    <h2 class="section-title glow-text" data-text="Découvrez notre vanille.">Découvrez notre vanille.
+                    </h2>
+                </div>
+
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="3gousses.jpeg" alt="3 Gousses de Vanille" class="product-image-photo" width="400"
+                                height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">3 Gousses | Vanille</h3>
+                            <p class="product-description">Gousses premium de Madagascar, 16-18cm, charnues et
+                                aromatiques. Grade A pour un parfum intense.</p>
+                            <div class="product-footer">
+                                <span class="product-price">7,50 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%203%20gousses%20de%20vanille."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-image">
+                            <div class="product-badge">Populaire</div>
+                            <img src="5gousses.jpeg" alt="5 Gousses de Vanille" class="product-image-photo" width="400"
+                                height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">5 Gousses | Vanille</h3>
+                            <p class="product-description">Gousses premium de Madagascar, 16-18cm, charnues et
+                                aromatiques. Grade A pour un parfum intense.</p>
+                            <div class="product-footer">
+                                <span class="product-price">11,50 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%205%20gousses%20de%20vanille."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="10gousses.jpeg" alt="10 Gousses de Vanille" class="product-image-photo"
+                                width="400" height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">10 Gousses | Vanille</h3>
+                            <p class="product-description">Gousses premium de Madagascar, 16-18cm, charnues et
+                                aromatiques. Grade A pour un parfum intense.</p>
+                            <div class="product-footer">
+                                <span class="product-price">20,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%2010%20gousses%20de%20vanille."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Grosse Quantité -->
+            <div class="product-category">
+                <div class="section-header">
+                    <h2 class="section-title glow-text" data-text="En grosse quantité.">En grosse quantité.</h2>
+                </div>
+
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="100grammes.jpeg" alt="100 Grammes de Vanille" class="product-image-photo"
+                                width="400" height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">100 Grammes | Vanille</h3>
+                            <p class="product-description">Vanille premium en vrac. Idéal pour les professionnels et
+                                passionnés de pâtisserie. Qualité exceptionnelle garantie.</p>
+                            <div class="product-footer">
+                                <span class="product-price">90,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%20100%20grammes%20de%20vanille."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-image">
+                            <div class="product-badge">Meilleur Prix</div>
+                            <img src="500grammes.jpeg" alt="500 Grammes de Vanille" class="product-image-photo"
+                                width="400" height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">500 Grammes | Vanille</h3>
+                            <p class="product-description">Vanille premium en vrac. Idéal pour les professionnels et
+                                passionnés de pâtisserie. Qualité exceptionnelle garantie.</p>
+                            <div class="product-footer">
+                                <span class="product-price">250,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%20500%20grammes%20de%20vanille."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="1kg.jpeg" alt="1 KG de Vanille" class="product-image-photo" width="400"
+                                height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">1 KG | Vanille</h3>
+                            <p class="product-description">Vanille premium en vrac. Idéal pour les professionnels et
+                                passionnés de pâtisserie. Qualité exceptionnelle garantie.</p>
+                            <div class="product-footer">
+                                <span class="product-price">450,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%201%20kg%20de%20vanille."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Poivre -->
+            <div class="product-category">
+                <div class="section-header">
+                    <h2 class="section-title glow-text" data-text="Découvrez notre poivre.">Découvrez notre poivre.</h2>
+                </div>
+
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="50grammespoivre.jpg" alt="50 Grammes de Poivre" class="product-image-photo"
+                                width="400" height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">50 Grammes | Poivre</h3>
+                            <p class="product-description">Poivre noir premium de Madagascar. Arôme intense et fruité,
+                                parfait pour sublimer vos plats.</p>
+                            <div class="product-footer">
+                                <span class="product-price">5,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%2050%20grammes%20de%20poivre."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="500grammespoivres.jpg" alt="500 Grammes de Poivre" class="product-image-photo"
+                                width="400" height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">500 Grammes | Poivre</h3>
+                            <p class="product-description">Poivre noir premium de Madagascar. Arôme intense et fruité,
+                                parfait pour sublimer vos plats.</p>
+                            <div class="product-footer">
+                                <span class="product-price">45,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%20500%20grammes%20de%20poivre."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-image">
+                            <img src="1kgpoivres.jpg" alt="1 KG de Poivre" class="product-image-photo" width="400"
+                                height="400" loading="lazy">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">1 KG | Poivre</h3>
+                            <p class="product-description">Poivre noir premium de Madagascar. Arôme intense et fruité,
+                                parfait pour sublimer vos plats.</p>
+                            <div class="product-footer">
+                                <span class="product-price">85,00 €</span>
+                                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaiterais%20vous%20acheter%201%20kg%20de%20poivre."
+                                    class="btn btn-product">Commander</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avantages Section -->
+    <section id="avantages" class="advantages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title glow-text" data-text="Pourquoi Notre Vanille ?">Pourquoi Notre Vanille ?</h2>
+            </div>
+
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">🇲🇬</div>
+                    <h3 class="advantage-title">Origine Certifiée Madagascar</h3>
+                    <p class="advantage-description">Vanille cultivée dans les meilleures régions de Madagascar, berceau
+                        de la vanille Bourbon premium reconnue mondialement.</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">⭐</div>
+                    <h3 class="advantage-title">Qualité Premium Grade A</h3>
+                    <p class="advantage-description">Taux de vanilline élevé, gousses charnues et brillantes. Sélection
+                        rigoureuse pour garantir un arôme exceptionnel.</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">🤝</div>
+                    <h3 class="advantage-title">Direct Producteur</h3>
+                    <p class="advantage-description">Sans intermédiaire. Prix justes pour vous et rémunération équitable
+                        pour les producteurs locaux.</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">🚚</div>
+                    <h3 class="advantage-title">Livraison Rapide</h3>
+                    <p class="advantage-description">Expédition soignée partout en France. Emballage hermétique pour
+                        préserver tous les arômes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Histoire Section -->
+    <section id="histoire" class="story">
+        <div class="story-background">
+            <div class="story-particle"></div>
+            <div class="story-particle"></div>
+        </div>
+
+        <div class="container">
+            <div class="section-header story-header">
+                <span class="section-badge">Notre Histoire</span>
+                <h2 class="section-title glow-text" data-text="Une Passion pour l'Authenticité">Une Passion pour
+                    l'Authenticité</h2>
+                <p class="section-subtitle">Découvrez l'aventure Mada-Vanille, née de la passion pour l'excellence</p>
+            </div>
+
+            <div class="video-content">
+                <div class="video-container" id="storyVideoContainer">
+                    <video class="video-player" id="storyVideoPlayer" poster="authentique.png" controls muted>
+                        <source src="videohistoire.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                    <div class="video-overlay" id="storyVideoOverlay">
+                        <button class="video-play-btn" aria-label="Lire la vidéo">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="white">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-text">
+                    <div class="video-message">
+                        <h3>2021 - Notre Naissance</h3>
+                        <p>Pensé pendant plusieurs années, le projet de développer une activité en métropole a
+                            finalement vu le jour en 2021. <strong>Mada-Vanille</strong> est une entreprise familiale
+                            établie à Baume-les-Dames.</p>
+
+                        <p><strong>Notre ambition</strong> est de promouvoir la consommation de produits naturels issus
+                            de petits producteurs, tout en faisant découvrir Madagascar à travers l'authenticité de ses
+                            saveurs.</p>
+
+                        <p>Chez Mada-Vanille, nous défendons une approche éthique et durable de l'agriculture. Nous
+                            collaborons directement avec les communautés locales, garantissant non seulement une vanille
+                            d'une qualité exceptionnelle, mais aussi le respect et le bien-être de celles et ceux qui la
+                            cultivent.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages Section -->
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-background">
+            <div class="contact-particle"></div>
+            <div class="contact-particle"></div>
+            <div class="contact-particle"></div>
+        </div>
+
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Contactez-nous</span>
+                <h2 class="section-title glow-text" data-text="Commandez en 2 Clics">Commandez en 2 Clics</h2>
+                <p class="section-subtitle">Une question ? Un projet ? Nous sommes là pour vous accompagner</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-methods">
+                    <div class="contact-card contact-whatsapp">
+                        <div class="contact-card-inner">
+                            <div class="contact-icon-wrapper">
+                                <div class="icon-pulse"></div>
+                                <div class="contact-icon">
+                                    <svg width="48" height="48" viewBox="0 0 32 32" fill="currentColor">
+                                        <path
+                                            d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3>WhatsApp</h3>
+                            <p>Réponse instantanée et personnalisée</p>
+                            <div class="contact-features">
+                                <span class="feature-badge">⚡ Rapide</span>
+                                <span class="feature-badge">💬 Direct</span>
+                                <span class="feature-badge">✅ Simple</span>
+                            </div>
+                            <a href="https://wa.me/33619138632" class="btn btn-primary btn-large btn-contact">
+                                <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+                                    <path
+                                        d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z" />
+                                </svg>
+                                Démarrer la conversation
+                                <span class="btn-shine"></span>
+                            </a>
+                            <span class="contact-number">+33 6 19 13 86 32</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-card contact-email">
+                        <div class="contact-card-inner">
+                            <div class="contact-icon-wrapper">
+                                <div class="icon-pulse"></div>
+                                <div class="contact-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                        </path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3>Email Professionnel</h3>
+                            <p>Pour toute demande d'information</p>
+                            <div class="contact-features">
+                                <span class="feature-badge">📧 Détaillé</span>
+                                <span class="feature-badge">📎 Pièces jointes</span>
+                            </div>
+                            <a href="mailto:tien.yusongnicolas@gmail.com" class="contact-email-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                tien.yusongnicolas@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-map">
+                    <div class="map-header">
+                        <div class="map-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="map-info">
+                            <h3>Notre Localisation</h3>
+                            <p>📍 Baume-les-Dames, 25110, France</p>
+                            <span class="map-subtitle">Au cœur de la Franche-Comté</span>
+                        </div>
+                    </div>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d43584.77139897476!2d6.336847!3d47.351194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479239c9b4f0c1d9%3A0x408ab2ae4bb3850!2s25110%20Baume-les-Dames!5e0!3m2!1sfr!2sfr!4v1234567890"
+                            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-info-grid">
+                <div class="info-item">
+                    <div class="info-icon">⏰</div>
+                    <div class="info-content">
+                        <h4>Horaires</h4>
+                        <p>Lun - Sam: 9h - 19h<br>Dimanche: Sur rendez-vous</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🚚</div>
+                    <div class="info-content">
+                        <h4>Livraison</h4>
+                        <p>France métropolitaine<br>Expédition sous 48h</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">💳</div>
+                    <div class="info-content">
+                        <h4>Paiement</h4>
+                        <p>Sécurisé & flexible<br>CB, Virement, PayPal</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🎁</div>
+                    <div class="info-content">
+                        <h4>Avantages</h4>
+                        <p>Réductions sur quantité<br>Fidélité récompensée</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final Section -->
+    <section class="cta-final">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Prêt à Découvrir la Vraie Vanille ?</h2>
+                <p>Commandez dès maintenant et recevez votre vanille premium directement chez vous</p>
+                <a href="https://wa.me/33619138632?text=Bonjour,%20je%20souhaite%20commander%20de%20la%20vanille%20premium"
+                    class="btn btn-primary btn-large">
+                    <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+                        <path
+                            d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z" />
+                    </svg>
+                    Commander Maintenant
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Vidéo Remerciement -->
+    <section class="video-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Message Spécial</span>
+                <h2 class="section-title">Merci pour 2024 !</h2>
+            </div>
+
+            <div class="video-content">
+                <div class="video-container" id="videoContainer">
+                    <video controls poster="authentique.png" class="video-player" id="videoPlayer" muted
+                        preload="metadata">
+                        <source src="merci.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                    <div class="video-overlay" id="videoOverlay">
+                        <button class="video-play-btn" aria-label="Lire la vidéo">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="white">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-text">
+                    <div class="video-message">
+                        <h3>Chers amis,</h3>
+                        <p>Un immense merci pour votre soutien tout au long de cette année ! Grâce à vous,
+                            <strong>Mada-Vanille</strong> a grandi et partagé sa passion pour la vanille de Madagascar
+                            avec le monde.
+                        </p>
+                        <p>2024 a été une aventure incroyable, et nous sommes prêts à écrire une nouvelle page avec vous
+                            en 2025.</p>
+                        <p class="video-signature">Bonne année à tous, et continuons ensemble cette belle aventure ! ❤️
+                        </p>
+
+                        <div class="video-cta">
+                            <a href="https://wa.me/33619138632?text=Merci%20pour%20cette%20belle%20année%20!"
+                                class="btn btn-primary">
+                                <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+                                    <path
+                                        d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z" />
+                                </svg>
+                                Nous écrire
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- À propos -->
+                <div class="footer-col footer-col-about">
+                    <div class="footer-logo">
+                        <img src="logo.png" alt="MADA-VANILLE Logo" class="footer-logo-image">
+                        <span>MADA-VANILLE</span>
+                    </div>
+                    <p class="footer-description">Vanille de Madagascar authentique et premium, directement du
+                        producteur à votre cuisine depuis 2021.</p>
+                    <div class="footer-badges">
+                        <span class="footer-badge">🇲🇬 100% Madagascar</span>
+                        <span class="footer-badge">⭐ Grade A Premium</span>
+                    </div>
+                </div>
+
+                <!-- Liens rapides -->
+                <div class="footer-col">
+                    <h4>Liens Rapides</h4>
+                    <ul>
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#produits">Nos Produits</a></li>
+                        <li><a href="#avantages">Nos Avantages</a></li>
+                        <li><a href="#histoire">Notre Histoire</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Baume-les-Dames, 25110</span>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor">
+                                <path
+                                    d="M27.281 4.65C24.318 1.686 20.373 0 16.178 0C7.352 0 0.178 7.173 0.178 15.998c0 2.82.734 5.577 2.134 8.007L0 32l8.195-2.144c2.362 1.284 5.025 1.962 7.757 1.962h.007c8.826 0 16-7.173 16-16 0-4.27-1.664-8.288-4.678-11.319zM16.178 29.23c-2.384 0-4.723-.64-6.766-1.849l-.485-.287-5.032 1.318 1.344-4.903-.316-.503c-1.329-2.114-2.032-4.559-2.032-7.075 0-7.337 5.973-13.31 13.31-13.31 3.553 0 6.89 1.385 9.4 3.895 2.51 2.51 3.895 5.847 3.895 9.4-.014 7.344-5.987 13.314-13.318 13.314zM23.51 19.387c-.402-.201-2.377-1.173-2.745-1.308-.368-.134-.636-.201-.905.201-.268.402-1.04 1.308-1.275 1.577-.234.268-.469.302-.871.1-.402-.2-1.698-.626-3.234-1.994-1.195-1.065-2.002-2.38-2.236-2.782-.235-.402-.025-.62.176-.82.18-.18.402-.469.603-.703.201-.235.268-.402.402-.67.134-.268.067-.503-.033-.704-.1-.201-.905-2.18-1.24-2.984-.327-.784-.66-.678-.905-.69-.234-.013-.502-.016-.77-.016s-.704.1-1.072.502c-.368.402-1.407 1.374-1.407 3.353s1.44 3.888 1.641 4.156c.201.268 2.821 4.308 6.835 6.04.955.414 1.701.661 2.282.847.958.304 1.83.261 2.52.158.769-.115 2.377-.971 2.712-1.908.335-.937.335-1.741.235-1.908-.1-.168-.368-.268-.77-.469z" />
+                            </svg>
+                            <a href="https://wa.me/33619138632">+33 6 19 13 86 32</a>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:tien.yusongnicolas@gmail.com">tien.yusongnicolas@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Réseaux sociaux -->
+                <div class="footer-col footer-col-social">
+                    <h4>Suivez-nous</h4>
+                    <a href="https://www.instagram.com/mada.vanille/" target="_blank"
+                        class="social-link instagram-link">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                        <span>@mada.vanille</span>
+                    </a>
+                    <div class="qr-code-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://www.instagram.com/mada.vanille/"
+                            alt="QR Code Instagram" class="qr-code">
+                        <p class="qr-label">Scannez pour suivre</p>
+                    </div>
+                    <p class="social-promo-text">Retrouvez nos promotions et la localisation de nos marchés ambulants !
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-left">
+                    <p>&copy; 2025 MADA-VANILLE - Vanille Premium de Madagascar</p>
+                    <p class="footer-tagline">Conçu avec passion 💚</p>
+                </div>
+                <div class="footer-bottom-right">
+                    <a href="#mentions-legales">Mentions Légales</a>
+                    <span class="separator">•</span>
+                    <a href="#confidentialite">Confidentialité</a>
+                    <span class="separator">•</span>
+                    <a href="#cgv">CGV</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="animations3d.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
