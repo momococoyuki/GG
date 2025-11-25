@@ -118,59 +118,7 @@ productCards.forEach((card) => {
     });
 });
 
-//  PARTICLES AU CLIC ====================
-function createGoldenParticle(x, y) {
-    const particle = document.createElement('div');
-    particle.style.position = 'fixed';
-    particle.style.left = x + 'px';
-    particle.style.top = y + 'px';
-    particle.style.width = '6px';
-    particle.style.height = '6px';
-    particle.style.background = 'radial-gradient(circle, #F4A259, #E07856)';
-    particle.style.borderRadius = '50%';
-    particle.style.pointerEvents = 'none';
-    particle.style.zIndex = '9998';
-    particle.style.boxShadow = '0 0 10px rgba(224, 120, 86, 0.8)';
 
-    const angle = Math.random() * Math.PI * 2;
-    const velocity = 2 + Math.random() * 4;
-    const vx = Math.cos(angle) * velocity;
-    const vy = Math.sin(angle) * velocity;
-
-    document.body.appendChild(particle);
-
-    let posX = x;
-    let posY = y;
-    let opacity = 1;
-    let size = 6;
-
-    const animate = () => {
-        posX += vx;
-        posY += vy - 1;
-        opacity -= 0.02;
-        size -= 0.1;
-
-        particle.style.left = posX + 'px';
-        particle.style.top = posY + 'px';
-        particle.style.opacity = opacity;
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-
-        if (opacity > 0) {
-            requestAnimationFrame(animate);
-        } else {
-            particle.remove();
-        }
-    };
-
-    animate();
-}
-
-document.addEventListener('click', (e) => {
-    for (let i = 0; i < 8; i++) {
-        setTimeout(() => createGoldenParticle(e.clientX, e.clientY), i * 20);
-    }
-});
 
 // ==================== INITIALISATION ====================
 document.addEventListener('DOMContentLoaded', () => {
